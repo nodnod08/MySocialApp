@@ -2,16 +2,17 @@ import React, { useState } from 'react';
 import { View, StyleSheet, Image, Text, Dimensions } from 'react-native';
 import { withTheme } from 'react-native-paper';
 
+import Main from './../layouts/Main';
 import TextInput from '../reusables/TextInput';
 import Button from '../reusables/Button';
 import Logo from '../../assets/logo.png';
-import Google from '../../assets/google.png';
-import Github from '../../assets/github.png';
-import Main from '../layouts/Main';
 
-const Login = props => {
+const Signup = props => {
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [cpassword, setCPassword] = useState('');
 
   const { colors } = props.theme;
   const { navigation } = props;
@@ -22,12 +23,26 @@ const Login = props => {
         <Image style={styles.logo} source={Logo} />
         <View marginBottom={10}>
           <TextInput
+            label="First Name"
+            value={firstName}
+            onChangeText={text => setFirstName(text)}
+          />
+        </View>
+        <View marginBottom={10}>
+          <TextInput
+            label="Last Name"
+            value={lastName}
+            onChangeText={text => setLastName(text)}
+          />
+        </View>
+        <View marginBottom={10}>
+          <TextInput
             label="Email"
             value={email}
             onChangeText={text => setEmail(text)}
           />
         </View>
-        <View marginBottom={45}>
+        <View marginBottom={10}>
           <TextInput
             secureTextEntry={true}
             label="Password"
@@ -35,41 +50,28 @@ const Login = props => {
             onChangeText={text => setPassword(text)}
           />
         </View>
-        <View style={styles.login}>
-          <Button customStyles={{ paddingVertical: 14 }}>
-            <Text style={{ fontSize: 15, color: colors.secondary }}>LOGIN</Text>
-          </Button>
+        <View marginBottom={25}>
+          <TextInput
+            secureTextEntry={true}
+            label="Confirm Password"
+            value={cpassword}
+            onChangeText={text => setCPassword(text)}
+          />
         </View>
         <View style={styles.login}>
-          <Button color="secondary">
-            <Image style={styles.google} source={Google} />
-            <Text style={{ fontSize: 15, color: '#fff' }}>
-              {' '}
-              Login With Google
+          <Button customStyles={{ paddingVertical: 14 }} color="primary">
+            <Text style={{ fontSize: 15, color: colors.light }}>
+              CREATE ACCOUNT
             </Text>
           </Button>
-        </View>
-        <View style={styles.login}>
-          <Button color="light">
-            <Image style={styles.google} source={Github} />
-            <Text style={{ fontSize: 15, color: colors.secondary }}>
-              {' '}
-              Login With Github
-            </Text>
-          </Button>
-        </View>
-        <View>
-          <Text style={{ fontSize: 20, marginBottom: 10, alignSelf: 'center' }}>
-            OR
-          </Text>
         </View>
         <View style={styles.login}>
           <Button
             customStyles={{ paddingVertical: 14 }}
-            onPress={() => navigation.navigate('Signup')}
+            onPress={() => navigation.navigate('Login')}
           >
             <Text style={{ fontSize: 15, color: colors.secondary }}>
-              CREATE ACCOUNT
+              BACK TO LOGIN
             </Text>
           </Button>
         </View>
@@ -82,18 +84,19 @@ const buttons = {
   fontSize: 25,
   alignItems: 'center',
   display: 'flex',
-  flexDirection: 'column',
+  flexDirection: 'row',
   justifyContent: 'center'
 };
 
 const styles = StyleSheet.create({
   main: {
-    marginTop: -50,
+    marginTop: -60,
     height: Dimensions.get('window').height,
     width: 300,
     justifyContent: 'center'
   },
   logo: {
+    marginTop: 50,
     marginBottom: 20,
     width: 100,
     height: 100,
@@ -112,4 +115,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default withTheme(Login);
+export default withTheme(Signup);
