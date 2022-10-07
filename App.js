@@ -4,8 +4,15 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
+// pages
 import Login from './components/pages/Login';
 import Signup from './components/pages/Signup';
+import Home from './components/pages/Home';
+
+// partials
+import HeaderToggler from './components/layouts/HeaderToggler';
+
+import * as pages from './constants/layouts';
 
 const theme = {
   ...DefaultTheme,
@@ -15,8 +22,10 @@ const theme = {
     ...DefaultTheme.colors,
     primary: '#4269f5',
     secondary: '#404040',
+    secondary1: '#919191',
     light: '#fff',
-    background: 'white'
+    background: 'white',
+    grey: '#fafafa'
   }
 };
 
@@ -40,27 +49,42 @@ export default function App() {
       <NavigationContainer>
         <PaperProvider theme={theme}>
           <Stack.Navigator
-            initialRouteName='Login'
+            initialRouteName={pages.LOGIN}
             screenOptions={{
               headerMode: 'float',
               headerStyle: {
-                backgroundColor: '#404040'
+                backgroundColor: theme.colors.secondary
               },
-              headerTintColor: '#fff',
+              headerTintColor: theme.colors.light,
               headerTitleStyle: {
                 fontWeight: 'bold'
               }
             }}
           >
             <Stack.Screen
-              name='Signup'
+              name={pages.HOME}
+              component={Home}
+              options={{
+                headerMode: 'float',
+                headerStyle: {
+                  backgroundColor: theme.colors.light
+                },
+                headerTintColor: theme.colors.secondary,
+                headerTitleStyle: {
+                  fontWeight: 'light'
+                },
+                headerRight: () => <HeaderToggler />
+              }}
+            />
+            <Stack.Screen
+              name={pages.SIGNUP}
               component={Signup}
               options={{
                 title: 'Create Account'
               }}
             />
             <Stack.Screen
-              name='Login'
+              name={pages.LOGIN}
               component={Login}
               options={{
                 transitionSpec: {

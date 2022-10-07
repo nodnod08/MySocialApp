@@ -1,8 +1,14 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, Image, Text, Dimensions } from 'react-native';
+import {
+  View,
+  StyleSheet,
+  Image,
+  Text,
+  Dimensions,
+  StatusBar
+} from 'react-native';
 import { withTheme } from 'react-native-paper';
 
-import Main from './../layouts/Main';
 import TextInput from '../reusables/TextInput';
 import Button from '../reusables/Button';
 import Logo from '../../assets/logo.png';
@@ -18,26 +24,30 @@ const Signup = props => {
   const { navigation } = props;
 
   return (
-    <Main>
+    <View style={styles.source}>
+      <StatusBar
+        barStyle={`${Platform.OS == 'ios' ? 'light' : 'dark'}-content`}
+        backgroundColor='#fff'
+      />
       <View style={styles.main}>
         <Image style={styles.logo} source={Logo} />
         <View marginBottom={10}>
           <TextInput
-            label="First Name"
+            label='First Name'
             value={firstName}
             onChangeText={text => setFirstName(text)}
           />
         </View>
         <View marginBottom={10}>
           <TextInput
-            label="Last Name"
+            label='Last Name'
             value={lastName}
             onChangeText={text => setLastName(text)}
           />
         </View>
         <View marginBottom={10}>
           <TextInput
-            label="Email"
+            label='Email'
             value={email}
             onChangeText={text => setEmail(text)}
           />
@@ -45,7 +55,7 @@ const Signup = props => {
         <View marginBottom={10}>
           <TextInput
             secureTextEntry={true}
-            label="Password"
+            label='Password'
             value={password}
             onChangeText={text => setPassword(text)}
           />
@@ -53,13 +63,13 @@ const Signup = props => {
         <View marginBottom={25}>
           <TextInput
             secureTextEntry={true}
-            label="Confirm Password"
+            label='Confirm Password'
             value={cpassword}
             onChangeText={text => setCPassword(text)}
           />
         </View>
         <View style={styles.login}>
-          <Button customStyles={{ paddingVertical: 14 }} color="primary">
+          <Button customStyles={{ paddingVertical: 14 }} color='primary'>
             <Text style={{ fontSize: 15, color: colors.light }}>
               CREATE ACCOUNT
             </Text>
@@ -76,7 +86,7 @@ const Signup = props => {
           </Button>
         </View>
       </View>
-    </Main>
+    </View>
   );
 };
 
@@ -89,14 +99,18 @@ const buttons = {
 };
 
 const styles = StyleSheet.create({
+  source: {
+    display: 'flex',
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: Dimensions.get('window').height
+  },
   main: {
-    marginTop: -60,
-    height: Dimensions.get('window').height,
     width: 300,
     justifyContent: 'center'
   },
   logo: {
-    marginTop: 50,
     marginBottom: 20,
     width: 100,
     height: 100,

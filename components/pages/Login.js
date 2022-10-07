@@ -1,16 +1,22 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, Image, Text, Dimensions } from 'react-native';
+import {
+  View,
+  StyleSheet,
+  Image,
+  Text,
+  Dimensions,
+  StatusBar
+} from 'react-native';
 import { withTheme } from 'react-native-paper';
-import * as WebBrowser from 'expo-web-browser';
-import * as GoogleProvider from 'expo-auth-session/providers/google';
 import { IOS_CLIENT_ID, ANDROID_CLIENT_ID, EXPO_CLIENT_ID } from '@env';
+import * as GoogleProvider from 'expo-auth-session/providers/google';
+import * as WebBrowser from 'expo-web-browser';
 
 import TextInput from '../reusables/TextInput';
 import Button from '../reusables/Button';
 import Logo from '../../assets/logo.png';
 import Google from '../../assets/google.png';
 import Github from '../../assets/github.png';
-import Main from '../layouts/Main';
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -22,20 +28,23 @@ const Login = props => {
   const { navigation } = props;
 
   const [request, response, promptAsync] = GoogleProvider.useAuthRequest({
-    iosClientId: IOS_CLIENT_ID,
-    androidClientId: ANDROID_CLIENT_ID,
     expoClientId: EXPO_CLIENT_ID,
-    scopes: ['email', 'profile']
+    iosClientId: IOS_CLIENT_ID,
+    androidClientId: ANDROID_CLIENT_ID
   });
 
   React.useEffect(() => {
     if (response?.type === 'success') {
-      console.log(response);
+      navigation.navigate('Home');
     }
   }, [response]);
 
   return (
-    <Main>
+    <View style={styles.source}>
+      <StatusBar
+        barStyle={`${Platform.OS == 'ios' ? 'light' : 'dark'}-content`}
+        backgroundColor='#fff'
+      />
       <View style={styles.main}>
         <Image style={styles.logo} source={Logo} />
         <View marginBottom={10}>
@@ -97,7 +106,7 @@ const Login = props => {
           </Button>
         </View>
       </View>
-    </Main>
+    </View>
   );
 };
 
@@ -110,9 +119,14 @@ const buttons = {
 };
 
 const styles = StyleSheet.create({
+  source: {
+    display: 'flex',
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: Dimensions.get('window').height
+  },
   main: {
-    marginTop: -50,
-    height: Dimensions.get('window').height,
     width: 300,
     justifyContent: 'center'
   },
