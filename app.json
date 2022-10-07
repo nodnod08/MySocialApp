@@ -1,7 +1,8 @@
 {
   "expo": {
     "name": "MySocialApp",
-    "slug": "MySocialApp",
+    "owner": "dondon181409",
+    "slug": "mysocialapp",
     "version": "1.0.0",
     "orientation": "default",
     "icon": "./assets/icon.png",
@@ -16,16 +17,29 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.dondon181409.mysocialapp",
+      "config": {
+        "googleSignIn": {
+          "reservedClientId": "com.googleusercontent.apps.463211604652-2p2gsge4b9m9fm1gk58uit6h5ooijurs"
+        }
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.dondon181409.mysocialapp",
+      "versionCode": 1
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "ba5cc3b3-4745-4021-95ec-e462592e7a6d"
+      }
     }
   }
 }

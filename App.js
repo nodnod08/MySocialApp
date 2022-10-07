@@ -40,7 +40,7 @@ export default function App() {
       <NavigationContainer>
         <PaperProvider theme={theme}>
           <Stack.Navigator
-            initialRouteName="Login"
+            initialRouteName='Login'
             screenOptions={{
               headerMode: 'float',
               headerStyle: {
@@ -53,14 +53,14 @@ export default function App() {
             }}
           >
             <Stack.Screen
-              name="Signup"
+              name='Signup'
               component={Signup}
               options={{
                 title: 'Create Account'
               }}
             />
             <Stack.Screen
-              name="Login"
+              name='Login'
               component={Login}
               options={{
                 transitionSpec: {

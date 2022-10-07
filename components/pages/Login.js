@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, Image, Text, Dimensions } from 'react-native';
 import { withTheme } from 'react-native-paper';
+import * as WebBrowser from 'expo-web-browser';
+import * as GoogleProvider from 'expo-auth-session/providers/google';
+import { IOS_CLIENT_ID, ANDROID_CLIENT_ID, EXPO_CLIENT_ID } from '@env';
 
 import TextInput from '../reusables/TextInput';
 import Button from '../reusables/Button';
@@ -9,6 +12,8 @@ import Google from '../../assets/google.png';
 import Github from '../../assets/github.png';
 import Main from '../layouts/Main';
 
+WebBrowser.maybeCompleteAuthSession();
+
 const Login = props => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -16,13 +21,26 @@ const Login = props => {
   const { colors } = props.theme;
   const { navigation } = props;
 
+  const [request, response, promptAsync] = GoogleProvider.useAuthRequest({
+    iosClientId: IOS_CLIENT_ID,
+    androidClientId: ANDROID_CLIENT_ID,
+    expoClientId: EXPO_CLIENT_ID,
+    scopes: ['email', 'profile']
+  });
+
+  React.useEffect(() => {
+    if (response?.type === 'success') {
+      console.log(response);
+    }
+  }, [response]);
+
   return (
     <Main>
       <View style={styles.main}>
         <Image style={styles.logo} source={Logo} />
         <View marginBottom={10}>
           <TextInput
-            label="Email"
+            label='Email'
             value={email}
             onChangeText={text => setEmail(text)}
           />
@@ -30,7 +48,7 @@ const Login = props => {
         <View marginBottom={45}>
           <TextInput
             secureTextEntry={true}
-            label="Password"
+            label='Password'
             value={password}
             onChangeText={text => setPassword(text)}
           />
@@ -41,7 +59,12 @@ const Login = props => {
           </Button>
         </View>
         <View style={styles.login}>
-          <Button color="secondary">
+          <Button
+            color='secondary'
+            onPress={() => {
+              promptAsync();
+            }}
+          >
             <Image style={styles.google} source={Google} />
             <Text style={{ fontSize: 15, color: '#fff' }}>
               {' '}
@@ -50,7 +73,7 @@ const Login = props => {
           </Button>
         </View>
         <View style={styles.login}>
-          <Button color="light">
+          <Button color='light'>
             <Image style={styles.google} source={Github} />
             <Text style={{ fontSize: 15, color: colors.secondary }}>
               {' '}
